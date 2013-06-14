@@ -3,7 +3,7 @@ DynamicBar
 
 Javascript Project to create Dom Elements dynamically and provide Animation to those elements
 
-PROJECT REQUIREMENTS AR AS FOLLOWS:
+PROJECT REQUIREMENTS ARE AS FOLLOWS:
 
 Dynamically creating form elements depending upon the answer of the last question
 
