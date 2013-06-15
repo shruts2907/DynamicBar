@@ -34,3 +34,6 @@ Include comments in the code to clearly explain functionality.
 
 Re-direction of non-modern and Mac IE browsers ( Mac IE will pass document.getElementById), redirect the user to FireFox download page
 
+DEMO:
+======
+http://people.rit.edu/~smt9471/736/project1/canvas.html
