@@ -1,0 +1,324 @@
+ <!DOCTYPE html>
+
+<html>
+<head>
+    <title>Project1: Dynamic Bar</title>
+   <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript" src="js/cookies.js"></script>
+  <script type="text/javascript" src="js/selection.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+	<style>
+		#brickCanvas{
+			position: absolute;
+			height: 35em;
+			width: 100%;
+			overflow: hidden;
+			z-index: -1;
+		}
+		#floorCanvas{
+			margin-top: 35em;
+			width: 100%;
+			position:absolute;
+		}
+		
+		#main{ position: relative;}
+		
+		#tableCanvas{
+			position: absolute;
+			z-index: 0.8;
+			margin-top: 20%;
+			margin-left: 10%;
+			width:40%;
+		}
+		#taleTop{
+			position:absolute;
+			z-index:0.8;
+			margin-top: 18%;
+			margin-left: 5%;
+		}
+		#barName{
+			position: absolute;
+			margin-left: 35%;
+		}
+		#myCanvas{
+			position:absolute;
+			margin-left:65%;
+			margin-top:-10%;
+			/*background: #FA58F4;*/
+			background:#fff;
+			border: 1px solid black;
+			visibility: hidden;
+		}
+		
+		@import url(http://fonts.googleapis.com/css?family=Bad+Script);
+
+	</style>
+	<script>
+		function myFunction(e)
+{
+x=e.clientX;
+y=e.clientY;
+coor="Coordinates: (" + x + "," + y + ")";
+console.log(coor);
+}
+	</script>
+</head>
+<body onload="create_form_name_local_cookies(); initAnimation();">
+	<div id="main">
+		<div id="barName" class="name-form-lightbox-effect">
+			<div id="ani_title"> Shrutika-s Dynamic Bar </div>
+		</div>
+		<canvas id="brickCanvas" >
+			
+		</canvas>
+		<canvas id="floorCanvas">
+		</canvas>
+	<canvas id="tableTop" >
+		Your browser does not support the HTML5 canvas tag.
+	</canvas>
+		<canvas id="tableCanvas">
+		</canvas>
+
+    </div>
+	
+	<!-- to display select tags -->
+	<div id="div_select">
+	</div>
+
+    <canvas id="myCanvas" width="400" height="600" onmousemove="myFunction(event)" ></canvas>
+
+
+</body>
+
+<script>
+	var can = document.getElementById('brickCanvas');
+	var ctx = can.getContext('2d');
+
+
+
+	// set up a pattern, something really elaborate!
+	var pattern = document.createElement('canvas');
+	pattern.width = 20;
+	pattern.height = 11;
+	var pctx = pattern.getContext('2d');
+	
+	//create the brick pattern;
+	var my_gradient=pctx.createLinearGradient(0,0,0,170);
+	my_gradient.addColorStop(1,"#FBFBEF");
+	my_gradient.addColorStop(0,"#B43104");
+	pctx.fillStyle=my_gradient;
+	
+	//give border to the brick to differentiate 
+	pctx.strokeStyle="#B43104";
+	pctx.strokeRect(0,0,19.5,10.5);
+	pctx.fillRect(0,0,19,10);
+	
+
+
+	// Now we draw that pattern to a custom shape:
+	var pattern = ctx.createPattern(pattern, "repeat");
+	ctx.beginPath();
+	ctx.fillStyle = pattern;
+
+	// Draw whatever you want that is to be filled with the pattern. I'm just gonna fill the entire canvas with the pattern:
+	ctx.fillRect(0,0,300,300);
+
+
+
+</script>
+
+<script>
+	
+
+	var tableCanvas = document.getElementById('tableCanvas');
+	var ctx = tableCanvas.getContext('2d');
+	
+	//create pattern
+	var pattern = document.createElement('canvas');
+	pattern.width= 50;
+	pattern.height=110;
+	var _pctx = pattern.getContext('2d');
+	
+	//now create bar table
+	var _bar_gradient = _pctx.createLinearGradient(0,0,200,0);
+	_bar_gradient.addColorStop(0,"brown");
+	_bar_gradient.addColorStop(1,"white");
+
+	// Fill with gradient
+	_pctx.fillStyle=_bar_gradient;
+	_pctx.fillRect(0,0,50,110);
+	
+	//give border to the brick to differentiate 
+	_pctx.strokeStyle="#B43104";
+	_pctx.strokeRect(0,0,49.5,109.5);
+	_pctx.fillRect(0,0,50,110);
+	
+	// Now we draw that pattern to a custom shape:
+	var pattern = ctx.createPattern(pattern, "repeat");
+	ctx.beginPath();
+	ctx.fillStyle = pattern;
+
+	ctx.fillRect(0,0,300,300);
+	
+</script>
+<script>
+	var tableTop = document.getElementById('tableTop');
+	var ctx = tableCanvas.getContext('2d');
+	
+	//create pattern
+	ctx.fillStyle="brown";
+	ctx.fillRect(0,0,700,15);
+</script>
+<script>
+	//////////////////////////////////////////////
+	//function to intialise animation
+	//
+	////////////////////////////////////////////
+	function initAnimation() {
+			if(isSafari){
+			console.log('animation safari');
+				positionTitle("ani_title",7,750);
+				animate("ani_title",480,100);
+			}else{
+				positionTitle("ani_title",0,350);
+				animate("ani_title",0,100);
+			}
+				
+	}
+			
+	/////////////////////////////////////////////
+	//function to begin animation position
+	//
+	/////////////////////////////////////////////
+	function positionTitle(elementID,top,left) {
+		if (!document.getElementById) return false;
+		if (!document.getElementById(elementID)) return false;
+		var elem = document.getElementById(elementID);
+		elem.style.position = "absolute";
+		elem.style.left = left + "px";
+		elem.style.top = top + "px";
+		elem.style.opacity= 0.1;
+	} //postionElement
+	
+	//////////////////////////////////////////////////////////////////////////
+	//function to create animation for bar title
+	//
+	///////////////////////////////////////////////////////////////
+	function animate(elementId,final_x,interval){
+		if (!document.getElementById) return false;
+		if (!document.getElementById(elementId)) return false;
+		var elem = document.getElementById(elementId);
+		if (elem.movement) { //see if a movement variable exists for this element, 
+												//if it does, clear out any animation
+				clearTimeout(elem.movement);
+			  }
+		if (!elem.style.left) {  //set default left if isn't set
+		elem.style.left = "0px";
+		}
+		if (!elem.style.top) {  //set default top if isn't set
+		elem.style.top = "0px";
+		}
+		var xpos = parseInt(elem.style.left);
+		var ypos = parseInt(elem.style.top);
+		
+		if(xpos == final_x){
+			if(isSafari){
+				xpos = 750;
+			}else{
+				xpos = 350;
+			}
+		}
+		
+		if (xpos > final_x) {
+			//console.log("inside xpos");
+			var dist = Math.ceil((xpos -final_x)/10); 
+			xpos = xpos - dist;
+			elem.style.opacity= 1;
+	    }
+		
+		elem.style.left = xpos + "px";
+		var repeat = "animate('"+elementId+"',"+final_x+","+interval+")";
+		elem.movement = setTimeout(repeat,interval); //create the movement variable for this element
+	}
+</script>
+
+<script>
+	var canvas = document.getElementById('floorCanvas');
+    var ctx = canvas.getContext('2d');  
+    
+    var pattern = document.createElement('canvas');
+	pattern.width = 4;
+	pattern.height = 5;
+	var pctx = pattern.getContext('2d');
+	
+	//create the brick pattern;
+	for(var w=0;w<=64;w++){
+	opacity = Math.random();
+	while(opacity<0.5){
+		opacity = Math.random();
+	}
+	
+	pctx.fillStyle= 'rgba(54,11,54,'+opacity+')';
+	}
+	
+	//give border to the brick to differentiate 
+	pctx.strokeStyle="#789F06";
+	pctx.strokeRect(0,0,1.5,1.5);
+	pctx.fillRect(0,0,5.4,5.6);
+	
+
+
+	// Now we draw that pattern to a custom shape:
+	var pattern = ctx.createPattern(pattern, "repeat");
+	ctx.beginPath();
+	ctx.fillStyle = pattern;
+
+	// Draw whatever you want that is to be filled with the pattern. I'm just gonna fill the entire canvas with the pattern:
+	ctx.fillRect(0,0,300,80);
+
+
+</script>
+<script>
+	//check if browser is safari because .name-form-lightbox-effect is not supported and table goes at the top
+	//hence different css for safari
+	
+	//table for safari goes up at margin 0 so different css for safari
+	var isSafari = ((navigator.appName == "Netscape") && (navigator.userAgent.indexOf("Safari") != -1));
+	var bar_title = document.getElementById('ani_title');
+	var tableCanvasCss = document.getElementById('tableCanvas');
+	var result_canvas = document.getElementById('myCanvas');
+
+	if(isSafari){
+		console.log("inside here");
+		tableCanvasCss.setAttribute('style','margin-top:290px');
+				
+		bar_title.setAttribute('style','display:inline');
+    
+		document.getElementById('main').appendChild(bar_title);
+		document.getElementById('main').appendChild(tableCanvasCss);
+
+
+	}
+	
+	var isOpera =(navigator.userAgent.indexOf("Opera") != -1);
+	var isIE9 = (navigator.userAgent.indexOf("MSIE") != -1);
+	
+	if(isOpera ||isIE9){
+		console.log(" is opera");
+		
+		tableCanvasCss.setAttribute('style','height:290px');
+	}
+	
+	if(isIE8){
+		//alert("ie 8 ");
+    //since ie 8 doesn't support css3 features of transperancy alternative simple css for the same
+		var bar_box = document.getElementById('barName');
+		bar_box.style.setAttribute('border','3px solid #ccc');
+		document.getElementById('main').appendChild(bar_box);		
+	}
+	
+
+</script>
+
+</html>
