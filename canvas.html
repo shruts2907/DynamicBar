@@ -55,13 +55,13 @@
 
 	</style>
 	<script>
-		function myFunction(e)
-{
-x=e.clientX;
-y=e.clientY;
-coor="Coordinates: (" + x + "," + y + ")";
-console.log(coor);
-}
+	function myFunction(e)
+	{
+		x=e.clientX;
+		y=e.clientY;
+		coor="Coordinates: (" + x + "," + y + ")";
+		console.log(coor);
+	}
 	</script>
 </head>
 <body onload="create_form_name_local_cookies(); initAnimation();">
@@ -121,7 +121,7 @@ console.log(coor);
 	ctx.beginPath();
 	ctx.fillStyle = pattern;
 
-	// Draw whatever you want that is to be filled with the pattern. I'm just gonna fill the entire canvas with the pattern:
+	// Draw the pattern. 
 	ctx.fillRect(0,0,300,300);
 
 
